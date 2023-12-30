@@ -14,6 +14,15 @@
 <script src="../assets/js/main.js"></script>
 <script>
     $(document).ready(function() {
+		$('*select[data-selectModalCreatejs="true"]').select2({
+            dropdownParent: $('#modal-create'),
+			width: '100%',
+    	});
+		$('*select[data-selectModalEditjs="true"]').select2({
+            dropdownParent: $('#modal-edit'),
+			width: '100%',
+    	});
+
 		$('*select[data-selectjs="true"]').select2({
 			width: '100%',
         });
