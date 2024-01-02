@@ -60,18 +60,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link <?php echo (strpos($current_page, 'user.php') !== false) ? '' : 'collapsed'; ?>"
+            <a class="nav-link <?php echo (strpos($current_page, 'user.php') !== false || strpos($current_page, 'role.php') !== false) ? '' : 'collapsed'; ?>"
                data-bs-target="#user-management-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-people-fill"></i><span>User Management</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="user-management-nav" class="nav-content collapse <?php echo (strpos($current_page, 'user.php') !== false) ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
+            <ul id="user-management-nav" class="nav-content collapse <?php echo (strpos($current_page, 'user.php') !== false || strpos($current_page, 'role.php') !== false) ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="../admin/user.php" class="<?php echo (strpos($current_page, 'user.php') !== false) ? 'active' : ''; ?>">
                         <i class="bi bi-circle"></i><span>User</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="">
+                    <a href="../admin/role.php" class="<?php echo (strpos($current_page, 'role.php') !== false) ? 'active' : ''; ?>">
                         <i class="bi bi-circle"></i><span>Role</span>
                     </a>
                 </li>
