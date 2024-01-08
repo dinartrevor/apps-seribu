@@ -1,3 +1,8 @@
+<?php 
+	require_once '../config/helper.php';
+    session_start();
+	checkIsNotUser();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <?php include '../layouts/head.php'; ?>
