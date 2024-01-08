@@ -1,3 +1,9 @@
+<?php 
+	require_once '../config/helper.php';
+  session_start();
+	checkIsNotUser();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<?php include '../layouts/head.php'; ?>
@@ -22,7 +28,7 @@
 							</div>
 							<div class="card-body">
 								<div class="alert alert-info" role="alert">
-									<h4 class="alert-heading">Welcome Administrator</h4>
+									<h4 class="alert-heading">Welcome <?= $_SESSION['user']['name']; ?></h4>
 									<p>Happy <?= date('l'); ?></p>
 								</div>
 							</div>
