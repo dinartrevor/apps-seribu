@@ -1,6 +1,5 @@
 <?php
-// Get the current page filename
-$current_page = basename($_SERVER['PHP_SELF']);
+    $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -16,12 +15,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="../assets/img/logo-sttb.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Administrator</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['user']['name']; ?></span>
                 </a><!-- End Profile Image Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>Administrator</h6>
+                        <h6><?= $_SESSION['user']['name']; ?></h6>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -40,7 +39,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                             <i class="bi bi-box-arrow-right"></i>
-                            <form action="#" method="POST">
+                            <form action="../config/logout_function.php" method="POST">
                                 <button type="submit" class="dropdown-item">Sign Out</button>
                             </form>
                         </a>
