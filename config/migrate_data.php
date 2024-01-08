@@ -78,7 +78,6 @@ try {
         $stmt->execute();
         $stmt->close();
     }
-
     echo "Seeder executed successfully!";
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();

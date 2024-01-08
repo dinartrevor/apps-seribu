@@ -10,11 +10,11 @@
         <?php include '../layouts/sidebar.php'; ?>
         <main id="main" class="main">
             <div class="pagetitle">
-                <h1>User</h1>
+                <h1>Role</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">User</li>
+                        <li class="breadcrumb-item active">Role</li>
                     </ol>
                 </nav>
             </div>
@@ -25,12 +25,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6">
-                                        <h5 class="card-title">User List</h5>
+                                        <h5 class="card-title">Role List</h5>
                                     </div>
                                     <div class="col-6 mt-2">
                                         <div class="d-flex justify-content-end">
                                             <button class="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#modal-create">
-                                            <i class="bi bi-plus-circle-fill"></i>  Create User
+                                            <i class="bi bi-plus-circle-fill"></i>  Create Role
                                             </button>
                                         </div>
                                     </div>
@@ -42,9 +42,8 @@
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Role</th>
-                                                <th scope="col">Tanggal Buat</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Tanggal</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -58,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-				<?php include 'user/create.php' ?>
+				<?php include 'role/create.php' ?>
             </section>
         </main>
         <?php include '../layouts/footer.php'; ?>

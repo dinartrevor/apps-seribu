@@ -1,3 +1,8 @@
+<?php
+    require_once 'config/helper.php';
+    session_start();
+    checkIsUser();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -50,12 +55,19 @@
 
                 <div class="card mb-3">
                     <div class="card-body">
-                    <div class="pt-4 pb-2">
+                        <div class="pt-4 pb-2">
+                            <?php if (isset($_SESSION['error'])) : ?>
+                            <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+                                <strong><?= $_SESSION['error']; ?></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                                <?php unset($_SESSION['error']); ?>
+                            <?php endif; ?>
                         <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
                         <p class="text-center small">Enter your Email & Password to login</p>
-                    </div>
+                         </div>
 
-                    <form action="#" method="post" class="row g-3 needs-validation" novalidate>
+                    <form action="config/login_function.php" method="post" class="row g-3 needs-validation" novalidate>
                         <div class="col-12">
                             <label for="yourUsername" class="form-label">Email</label>
                             <div class="input-group has-validation">
