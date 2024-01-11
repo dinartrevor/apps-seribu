@@ -67,7 +67,7 @@
                         <p class="text-center small">Enter your Email & Password to login</p>
                          </div>
 
-                    <form action="config/login_function.php" method="post" class="row g-3 needs-validation" novalidate>
+                    <form action="config/function/login.php" method="post" class="row g-3 needs-validation" novalidate>
                         <div class="col-12">
                             <label for="yourUsername" class="form-label">Email</label>
                             <div class="input-group has-validation">
@@ -75,7 +75,7 @@
                                     <i class="fas fa-envelope"></i>
                                 </span>
                                 <input type="email" name="email" class="form-control" autocomplate="off" id="email" placeholder="Enter your Email Address">
-                              
+
                             </div>
 
                         </div>
@@ -87,7 +87,7 @@
                                     <i class="fas fa-eye-slash"></i>
                                 </span>
                                 <input type="password" name="password" class="form-control" autocomplate="off" id="password" placeholder="Enter your password">
-                               
+
                             </div>
                         </div>
                         <div class="col-12">
