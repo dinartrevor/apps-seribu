@@ -9,7 +9,7 @@
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-    
+
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
             <li class="nav-item dropdown pe-3">
@@ -39,7 +39,7 @@
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                             <i class="bi bi-box-arrow-right"></i>
-                            <form action="../config/logout_function.php" method="POST">
+                            <form action="../config/function/logout.php" method="POST">
                                 <button type="submit" class="dropdown-item">Sign Out</button>
                             </form>
                         </a>
