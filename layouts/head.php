@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="../assets/vendor/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="../assets/vendor/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/vendor/toastr/toastr.css">
+
 
     <!-- Template Main CSS File -->
     <link href="../assets/css/style.css" rel="stylesheet">
