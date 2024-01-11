@@ -13,7 +13,7 @@ CREATE TABLE users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    npm VARCHAR(50) NULL,
+    npm VARCHAR(100) NULL UNIQUE,
     role_id INT,
     FOREIGN KEY (role_id) REFERENCES roles(id),
     INDEX (role_id)

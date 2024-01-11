@@ -1,8 +1,8 @@
-<?php 
+<?php
 session_start();
 
-require_once 'database.php';
-require_once 'helper.php';
+require_once '../database.php';
+require_once '../helper.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

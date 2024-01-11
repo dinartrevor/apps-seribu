@@ -2,7 +2,7 @@
 <script src="../assets/vendor/jquery/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="../assets/vendor/select2/select2.min.js"></script>
 <script src="../assets/vendor/sweetalert2/sweetalert2.min.js"></script>
 <script src="../assets/vendor/jquery-validation/jquery.validate.min.js"></script>
 <script src="../assets/vendor/datatables/jquery.dataTables.min.js"></script>
@@ -10,6 +10,7 @@
 <script src="../assets/vendor/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../assets/vendor/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="../assets/vendor/toastr/toastr.min.js"></script>
  <!-- Template Main JS File -->
 <script src="../assets/js/main.js"></script>
 <script>
