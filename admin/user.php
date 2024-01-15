@@ -55,6 +55,7 @@
                                                 <th scope="col">Role</th>
                                                 <th scope="col">NPM</th>
                                                 <th scope="col">Tanggal Buat</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -70,21 +71,36 @@
                                                     <td><?= $user['npm']; ?></td>
                                                     <td><?= date('d-m-Y', strtotime($user['created_at'])); ?></td>
                                                     <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="bi bi-gear-fill"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item edit" href="#" data-id="<?= $user['id']; ?>"  data-url-update="<?= './../config/function/user_update.php' ?>" data-url="<?= './../config/function/user_edit.php' ?>">
-                                                                <em class="bi bi-pencil-fill open-card-option"></em>
-                                                                    Edit
-                                                            </a>
-                                                            <a class="dropdown-item delete" data-url-destroy="<?= './../config/function/user_delete.php' ?>" data-id="<?= $user['id']; ?>">
-                                                                <em class="bi bi-trash-fill close-card"></em>
-                                                                Delete
-                                                            </a>
+                                                        <?php if($user['status'] == 0){ ?>
+                                                                <span class="badge bg-warning">Pending</span>
+                                                        <?php }elseif($user['status'] == 1){ ?>
+                                                            <span class="badge bg-success">Approval</span>
+                                                        <?php }else{ ?>
+                                                            <span class="badge bg-danger">Not Active</span>
+                                                        <?php }?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="bi bi-gear-fill"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item edit" href="#" data-id="<?= $user['id']; ?>"  data-url-update="<?= './../config/function/user_update.php' ?>" data-url="<?= './../config/function/user_edit.php' ?>">
+                                                                    <em class="bi bi-pencil-fill open-card-option"></em>
+                                                                        Edit
+                                                                </a>
+                                                                <a class="dropdown-item delete" data-url-destroy="<?= './../config/function/user_delete.php' ?>" data-id="<?= $user['id']; ?>">
+                                                                    <em class="bi bi-trash-fill close-card"></em>
+                                                                    Delete
+                                                                </a>
+                                                                <?php if($user['status'] != 1): ?>
+                                                                <a class="dropdown-item verify" data-url-verify="<?= './../config/function/user_verify.php' ?>" data-id="<?= $user['id']; ?>" data-status="1">
+                                                                    <em class="bi bi-check2-all close-card"></em>
+                                                                    Verifikasi
+                                                                </a>
+                                                                <?php endif ?>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
                                                     </td>
                                                 </tr>
@@ -155,8 +171,8 @@
                     });
                 });
                 $('#data-table tbody').on('click', '.delete', function () {
-                    var id = $(this).data('id');
-                    var url = $(this).data('url-destroy');
+                    let id = $(this).data('id');
+                    let url = $(this).data('url-destroy');
                     Swal.fire({
                         title: "Are you sure delete it?",
                         icon: "warning",
@@ -170,11 +186,52 @@
                                 type: "POST",
                                 data: {
                                     "id": id,
+
                                 },
                                 success: function (response) {
                                     response = JSON.parse(response);
                                     if(response.status){
                                         Swal.fire("Done!", "It was succesfully deleted!", "success").then(function(){
+                                            location.reload();
+                                        });
+                                    }else{
+                                        Swal.fire("Error deleting!", "Please try again", "error").then(function(){
+                                            location.reload();
+                                        });
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    Swal.fire("Error deleting!", "Please try again", "error").then(function(){
+                                        location.reload();
+                                    });
+                            }
+                            });
+                        }
+                    });
+                });
+                $('#data-table tbody').on('click', '.verify', function () {
+                    var id = $(this).data('id');
+                    var url = $(this).data('url-verify');
+                    let status = $(this).data('status');
+                    Swal.fire({
+                        title: "Are you sure to verify it?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                    }).then((result) => {
+                        if (result.isConfirmed){
+                            $.ajax({
+                                url: url,
+                                type: "POST",
+                                data: {
+                                    "id": id,
+                                    "status": status
+                                },
+                                success: function (response) {
+                                    response = JSON.parse(response);
+                                    if(response.status){
+                                        Swal.fire("Done!", "It was succesfully Verify!", "success").then(function(){
                                             location.reload();
                                         });
                                     }else{
