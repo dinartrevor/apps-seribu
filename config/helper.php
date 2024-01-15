@@ -34,8 +34,23 @@
 	}
     function getAllUser() {
 		global $conn;
-		$sql = "SELECT users.name, users.email, users.id, users.npm, users.role_id, users.password, users.created_at, roles.name as role_name FROM users
+		$sql = "SELECT users.name, users.email, users.id, users.npm, users.role_id, users.password, users.created_at, users.status, roles.name as role_name FROM users
                 JOIN roles ON users.role_id = roles.id WHERE roles.id != 1 AND users.deleted_by IS NULL";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$users = [];
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+        $stmt->close();
+        return $users;
+	}
+    function getAllPaymentMethod() {
+		global $conn;
+		$sql = "SELECT name, type, id, created_at FROM payment_methods
+                WHERE deleted_by IS NULL";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
 

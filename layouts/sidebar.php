@@ -82,6 +82,21 @@
                 </li>
                 <!-- Add other user management links here -->
             </ul>
-        </li><!-- End User Management Nav -->
+        </li>
+        <!-- End User Management Nav -->
+        <li class="nav-item">
+            <a class="nav-link <?php echo (strpos($current_page, 'payment_method.php') !== false) ? '' : 'collapsed'; ?>"
+               data-bs-target="#master-data-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-database-fill"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="master-data-nav" class="nav-content collapse <?php echo (strpos($current_page, 'payment_method.php') !== false) ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="../admin/payment_method.php" class="<?php echo (strpos($current_page, 'payment_method.php') !== false) ? 'active' : ''; ?>">
+                        <i class="bi bi-circle"></i><span>Metode Pembayaran</span>
+                    </a>
+                </li>
+                <!-- Add other user management links here -->
+            </ul>
+        </li>
     </ul>
 </aside><!-- End Sidebar-->

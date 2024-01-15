@@ -8,7 +8,7 @@ try {
     $conn->query("TRUNCATE TABLE roles");
     $conn->query("TRUNCATE TABLE permissions");
 	$conn->query('SET foreign_key_checks = 1');
-	
+
     // Seeder data
     $rolesData = [
         ['name' => 'Admin'],
@@ -34,18 +34,81 @@ try {
 
     $usersData = [
         [
-			'name' => 'Superadmin', 
-			'email' => 'superadmin@sttb.ac.id', 
+			'name' => 'Superadmin',
+			'email' => 'superadmin@sttb.ac.id',
 			'password' => password_hash('password', PASSWORD_DEFAULT),
-			'npm' => '', 
+			'npm' => '',
 			'role_id' => 1
 		],
         [
-			'name' => 'Dinar', 
-			'email' => 'superuser@sttb.ac.id', 
-			'password' => password_hash('123456789', PASSWORD_DEFAULT), 
-			'npm' => '21552011188', 
+			'name' => 'Dinar',
+			'email' => 'superuser@sttb.ac.id',
+			'password' => password_hash('123456789', PASSWORD_DEFAULT),
+			'npm' => '21552011188',
 			'role_id' => 2
+		],
+    ];
+
+    $paymentMethods = [
+        [
+			'name' => 'BCA',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'BRI',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'MANDIRI',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'BNI',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'PERMATA BANK',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'NIAGA',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'MAYBANK',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'OCBC',
+			'type' => 'Transfer Manual',
+		],
+        [
+			'name' => 'GoPay',
+			'type' => 'E-Wallet',
+		],
+        [
+			'name' => 'OVO',
+			'type' => 'E-Wallet',
+		],
+        [
+			'name' => 'DANA',
+			'type' => 'E-Wallet',
+		],
+        [
+			'name' => 'LinkAja',
+			'type' => 'E-Wallet',
+		],
+        [
+			'name' => 'Shopee Pay',
+			'type' => 'E-Wallet',
+		],
+        [
+			'name' => 'DOKU',
+			'type' => 'E-Wallet',
+		],
+        [
+			'name' => 'I-SAKU',
+			'type' => 'E-Wallet',
 		],
     ];
 
@@ -75,6 +138,12 @@ try {
 		$permission_id = $key+1;
         $stmt = $conn->prepare("INSERT INTO role_permissions (role_id, permission_id) VALUES (?, ?)");
         $stmt->bind_param("ii", $role_id, $permission_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+    foreach ($paymentMethods as $key => $paymentMethod) {
+        $stmt = $conn->prepare("INSERT INTO payment_methods (name, type) VALUES (?, ?)");
+        $stmt->bind_param("ss", $paymentMethod['name'], $paymentMethod['type']);
         $stmt->execute();
         $stmt->close();
     }
