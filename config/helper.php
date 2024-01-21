@@ -18,10 +18,26 @@
 	}
     function getAllRole() {
 		global $conn;
-		$sql = "SELECT * FROM roles";
+		$sql = "SELECT * FROM roles WHERE deleted_at IS NULL";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
 
+		$result = $stmt->get_result();
+		$roles = [];
+        while ($row = $result->fetch_assoc()) {
+            $roles[] = $row;
+        }
+
+        $stmt->close();
+
+        return $roles;
+	}
+	function getAllRolePermission($id) {
+		global $conn;
+		$sql = "SELECT * FROM role_permissions WHERE role_id = ?";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
 		$result = $stmt->get_result();
 		$roles = [];
         while ($row = $result->fetch_assoc()) {
@@ -77,6 +93,22 @@
 		$stmt->close();
 
 		return $user['name'];
+    }
+     function getAllPermission(){
+        global $conn;
+		$sql = "SELECT * FROM permissions";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$permissions = [];
+        while ($row = $result->fetch_assoc()) {
+            $permissions[] = $row;
+        }
+
+        $stmt->close();
+
+        return $permissions;
     }
 	function hasPermission($email, $permissionName) {
 		global $conn;
