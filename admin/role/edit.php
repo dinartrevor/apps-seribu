@@ -1,16 +1,17 @@
-<div class="modal fade" id="modal-create" tabindex="-1">
+<div class="modal fade" id="modal-edit" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create Role</h5>
+                <h5 class="modal-title">Edit Role</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="../../config/function/role_store.php" method="POST" id="form-create" enctype="multipart/form-data">
+            <form action="" method="POST" id="form-edit" enctype="multipart/form-data">
+            	 <input type="hidden" name="id" id="id_edit">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="name" class="form-label">Name <span class="text-red">*</span></label>
-                            <input type="text" class="form-control" name="name" id="name" autocomplete="off" placeholder="Enter Your Name">
+                            <input type="text" class="form-control" name="name" id="name_edit" autocomplete="off" placeholder="Enter Your Name">
                             <hr>
                         </div>
                         <div class="col-md-12">
@@ -21,22 +22,8 @@
                                         <th>Name</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php if(!empty($permissions)){
-                                    foreach($permissions as $value){
-                                    ?>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="form-check-input" id="<?= $value['id'] ?>" name="permission[]" value="<?= $value['id'] ?>">
-                                        </td>
-                                        <td>
-                                            <label for="permission" class="form-check-label"><?= $value['name'] ?></label>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                            }
-                                        }
-                                    ?>
+                                <tbody id="tbody-permission">
+                                    
                                 </tbody>
                             </table>
                         </div>

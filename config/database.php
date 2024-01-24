@@ -1,7 +1,7 @@
 <?php 
 $servername = "localhost";
 $username = "root";
-$password = "password";
+$password = "";
 $dbname = "apps-seribu";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
