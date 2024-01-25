@@ -45,7 +45,7 @@
     </div>
 
     <!-- Apa yang kita lakukan -->
-	<div class="container container-content mt-4">
+	<div class="container mt-4">
         <div class="row">
             <!-- Carousel on the left -->
             <div class="col-md-6">
@@ -79,11 +79,11 @@
 				<div class="card shadow-sm p-4 mb-5 bg-body rounded">
 					<h3>Aplikasi Seribu untuk Mahasiswa STTB</h3>
 					<p>
-						Banyak mahasiswa di seluruh Indonesia yang menghadapi tantangan keuangan selama masa kuliah mereka. 
-						Beberapa dari mereka mungkin kesulitan memenuhi kebutuhan dasar seperti biaya makan, transportasi, atau pembelian buku. Melihat realitas ini,  
+						Banyak mahasiswa di seluruh Indonesia yang menghadapi tantangan keuangan selama masa kuliah mereka.
+						Beberapa dari mereka mungkin kesulitan memenuhi kebutuhan dasar seperti biaya makan, transportasi, atau pembelian buku. Melihat realitas ini,
 						Program ini diharapkan membangun solidaritas dan memberikan kontribusi positif bagi mahasiswa yang memerlukan,
-						kami memperkenalkan program donasi yang simpel namun bermakna : 
-					</p> 
+						kami memperkenalkan program donasi yang simpel namun bermakna :
+					</p>
 					<h4 class="fw-bold">Satu Rupiah Satu Harapan</h4>
 				</div>
 			</div>
@@ -92,7 +92,7 @@
 
 
     <!-- Donasi Populer -->
-    <div class="container container-content mt-4">
+    <div class="container mt-4">
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Donasi Terbaru <span class="float-end"><a href="#" class="btn btn-link see-more-link">Lihat Selengkapnya...</a></span></h2>
@@ -153,45 +153,26 @@
     </div>
 
     <!-- Our Team -->
-    <div class="container container-content mt-4">
-        <h2>Team Kami</h2>
+    <div class="container mt-4">
         <div class="row">
-            <!-- Card Anggota Tim 1 -->
-            <div class="col-md-4">
-                <div class="shadow p-3 mb-5 bg-body rounded">
-                    <img src="assets/img/goku.jpeg" class="card-img-top height-500px" alt="Dinar Abdul Hollik Firdaus">
-                    <div class="card-body mt-3">
-                        <h5 class="card-title">Dinar Abdul Hollik Firdaus</h5>
-                        <p class="card-text">Posisi: Programmer</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Anggota Tim 2 -->
-            <div class="col-md-4">
-                <div class="shadow p-3 mb-5 bg-body rounded">
-                    <img src="assets/img/luffy.jpg" class="card-img-top height-500px" alt="Rizky Oktaviandy">
-                    <div class="card-body mt-3">
-                        <h5 class="card-title">Rizky Oktaviandy</h5>
-                        <p class="card-text">Posisi: Programmer</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Anggota Tim 3 -->
-            <div class="col-md-4">
-                <div class="shadow p-3 mb-5 bg-body rounded">
-                    <img src="assets/img/naruto.jpg" class="card-img-top height-500px" alt="Yogi Saputra">
-                    <div class="card-body mt-3">
-                        <h5 class="card-title">Yogi Saputra</h5>
-                        <p class="card-text">Posisi: Programmer</p>
+            <!-- Banner Card Full Image -->
+            <div class="col-md-12">
+                <div class="card bg-dark text-white">
+                    <img src="assets/img/banner-seribu.png" class="card-img opacity-25" alt="Our Team Banner">
+                    <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                        <div class="text-center">
+                            <h1 class="card-title">Satu Rupiah Satu Harapan <br>#SeribuSTTB</h1>
+                            <a href="#" class="btn btn-primary btn-lg mt-4">Donasi Sekarang</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 	 <!-- Footer -->
-	 <footer class="footer text-light text-center py-3 mt-3">
+	 <footer class="footer text-light text-center py-3 mt-4">
         <p>&copy; <?= date('Y'); ?> Seribu STTB. All rights reserved.</p>
     </footer>
     <!-- Script Bootstrap -->
