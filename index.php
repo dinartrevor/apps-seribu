@@ -161,7 +161,7 @@
                     <img src="assets/img/banner-seribu.png" class="card-img opacity-25" alt="Our Team Banner">
                     <div class="card-img-overlay d-flex align-items-center justify-content-center">
                         <div class="text-center">
-                            <h1 class="card-title">Satu Rupiah Satu Harapan <br>#SeribuSTTB</h1>
+                            <h1 class="card-title">Satu Rupiah Satu Harapan <br>#SeribuHarapan</h1>
                             <a href="#" class="btn btn-primary btn-lg mt-4">Donasi Sekarang</a>
                         </div>
                     </div>
