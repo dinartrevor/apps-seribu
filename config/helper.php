@@ -3,7 +3,7 @@
 
 	function getUser($email) {
 		global $conn;
-		$sql = "SELECT users.name, users.email, users.id, users.npm, users.role_id, users.password, roles.name as role_name FROM users
+		$sql = "SELECT users.name, users.email, users.id, users.npm, users.role_id, users.password, roles.name as role_name, users.status FROM users
 				JOIN roles ON users.role_id = roles.id
 				WHERE users.email = ?";
 		$stmt = $conn->prepare($sql);
@@ -161,6 +161,7 @@
 			'npm' => $user['npm'],
 			'role_id' => $user['role_id'],
 			'role_name' => $user['role_name'],
+			'status' => $user['status'],
 		];
 	}
 
@@ -184,15 +185,19 @@
 	}
 
 	function checkIsUser() {
-		if (!empty($_SESSION['user'])) {
+		if (!empty($_SESSION['user']) && $_SESSION['user']['role_id'] == 1) {
 			header('Location: ../admin/index.php');
-		}
+		}elseif (!empty($_SESSION['user']) && $_SESSION['user']['role_id'] != 1) {
+            header('Location: ../index.php');
+        }
 	}
 
 	function checkIsNotUser() {
 		if (empty($_SESSION['user'])) {
 			header('Location: ../login.php');
 			exit();
-		}
+		}elseif (!empty($_SESSION['user']) && $_SESSION['user']['role_id'] != 1) {
+            header('Location: ../index.php');
+        }
 	}
 ?>

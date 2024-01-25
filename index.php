@@ -1,49 +1,21 @@
+<?php
+    require_once 'config/helper.php';
+    session_start();
+    if(!empty($_SESSION['user'])){
+        $user =  getUser($_SESSION['user']['email']);
+        $isVerify = $user['status'] == 2 ? 2 : '';
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" crossorigin="anonymous">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <title>Apps Seribu STTB</title>
-    <link rel="stylesheet" href="assets/css/style_frontend.css">
-</head>
+    <?php include 'layouts_frontend/head.php'; ?>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="#">SERIBU STTB</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Donasi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tentang Kami</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-person-fill"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <input type="hidden" id="isVerify" value="<?= @$isVerify ?>">
+    <?php include 'layouts_frontend/navbar.php'; ?>
     <!-- Jumbotron Cover Gambar -->
     <div class="jumbotron">
         <div class="container"></div>
     </div>
-
     <!-- Apa yang kita lakukan -->
 	<div class="container mt-4">
         <div class="row">
@@ -89,8 +61,6 @@
 			</div>
         </div>
     </div>
-
-
     <!-- Donasi Populer -->
     <div class="container mt-4">
 		<div class="row">
@@ -151,32 +121,35 @@
             </div>
         </div>
     </div>
-
-    <!-- Our Team -->
-    <div class="container mt-4">
+    <!-- Banner -->
+    <div class="container mt-2">
         <div class="row">
             <!-- Banner Card Full Image -->
-            <div class="col-md-12">
-                <div class="card bg-dark text-white">
-                    <img src="assets/img/banner-seribu.png" class="card-img opacity-25" alt="Our Team Banner">
+            <div class="col-12">
+                <div class="card bg-dark text-white card-height">
+                    <img src="assets/img/banner-seribu.png" class="card-img opacity-25 img-height" alt="Banner">
                     <div class="card-img-overlay d-flex align-items-center justify-content-center">
                         <div class="text-center">
-                            <h1 class="card-title">Satu Rupiah Satu Harapan <br>#SeribuHarapan</h1>
-                            <a href="#" class="btn btn-primary btn-lg mt-4">Donasi Sekarang</a>
+                            <h1 class="card-title">Satu Rupiah Satu Harapan <br>#SeribuSenyuman</h1>
+                            <a href="#" class="btn btn-primary btn-lg mt-3">Donasi Sekarang</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-	 <!-- Footer -->
-	 <footer class="footer text-light text-center py-3 mt-4">
-        <p>&copy; <?= date('Y'); ?> Seribu STTB. All rights reserved.</p>
-    </footer>
-    <!-- Script Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include 'layouts_frontend/footer.php'; ?>
+	<?php include 'layouts_frontend/script.php'; ?>
+    <script>
+        $(document).ready(function () {
+            if($("#isVerify").val() != ""){
+                Swal.fire({
+                    title: "Akun Anda Belum Di Verifikasi Admin !!",
+                    icon: "warning"
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

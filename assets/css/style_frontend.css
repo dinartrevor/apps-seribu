@@ -37,6 +37,12 @@ body {
   .jumbotron {
       padding: 100px 0;
   }
+  .img-height{
+    height: 200px;
+  }
+  .card-height{
+    height: 200px;
+  }
 }
 
 .see-more-link {
