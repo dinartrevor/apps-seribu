@@ -2,7 +2,7 @@
     require_once 'config/helper.php';
     session_start();
     if(!empty($_SESSION['user'])){
-        $user =  getUser($_SESSION['user']['email']);
+        $user =  getUserProfile($_SESSION['user']['npm']);
         $isVerify = $user['status'] == 2 ? 2 : '';
     }
 ?>
@@ -140,16 +140,6 @@
     </div>
     <?php include 'layouts_frontend/footer.php'; ?>
 	<?php include 'layouts_frontend/script.php'; ?>
-    <script>
-        $(document).ready(function () {
-            if($("#isVerify").val() != ""){
-                Swal.fire({
-                    title: "Akun Anda Belum Di Verifikasi Admin !!",
-                    icon: "warning"
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>

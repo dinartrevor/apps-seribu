@@ -16,6 +16,23 @@
 
 		return $user;
 	}
+
+	function getUserProfile($npm) {
+		global $conn;
+		$sql = "SELECT users.name, users.email, users.id, users.npm, users.role_id, users.password, roles.name as role_name, users.status FROM users
+				JOIN roles ON users.role_id = roles.id
+				WHERE users.npm = ?";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("s", $npm);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$user = $result->fetch_assoc();
+		$stmt->close();
+
+		return $user;
+	}
+
     function getAllRole() {
 		global $conn;
 		$sql = "SELECT * FROM roles WHERE deleted_at IS NULL";
@@ -179,6 +196,18 @@
 		header('Location: ../../login.php');
 		exit();
 	}
+
+	function redirectUserError($message) {
+		$_SESSION['message_error'] = $message;
+		header("Location: ../../profile.php");
+		exit();
+	}
+
+	function redirectUserSuccess($message) {
+    $_SESSION['message_success'] = $message;
+    header("Location: ../../profile.php");
+    exit();
+}
 
 	function isDebug($debug) {
 		echo "<pre>";print_r($debug);echo "</pre>";die;
