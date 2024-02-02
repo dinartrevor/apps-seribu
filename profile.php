@@ -5,10 +5,12 @@
         $user =  getUserProfile($_SESSION['user']['npm']);
         $isVerify = $user['status'] == 2 ? 2 : '';
         $isDisabled = $user['status'] == 2 ? 'disabled' : '';
+        $donations = getByUserDonationWithDeleted($user['id']);
     }else{
 
 		header('Location: index.php');
 	}
+    $payment_methods = getAllPaymentMethod();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,8 +90,83 @@
 
                             <!-- Donasi Content -->
                             <div class="tab-pane fade" id="pills-donasi" role="tabpanel" aria-labelledby="pills-donasi-tab" tabindex="0">
-                                <!-- Your Donasi content goes here -->
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h4>Data Donasi</h4>
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#donationModal">
+                                                Open Donation Modal
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped" id="data-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Judul</th>
+                                                        <th scope="col">Target</th>
+                                                        <th scope="col">Tanggal Buat</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                 <tbody>
+                                                 <?php if(!empty($donations)){
+                                                        foreach ($donations as $key => $donation) {
+                                                    ?>
+                                                        <tr>
+                                                            <td><?= $key + 1; ?></td>
+                                                            <td><?= $donation['title']; ?></td>
+                                                            <td><?= number_format($donation['amount']); ?></td>
+                                                            <td><?= date('d-m-Y', strtotime($donation['created_at'])); ?></td>
+                                                            <td>
+                                                                <?php if(empty($donation['deleted_at'])){ ?>
+                                                                        <span class="badge bg-success">Publish</span>
+                                                                <?php }else{ ?>
+                                                                    <span class="badge bg-danger">Not Active</span>
+                                                                <?php }?>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="bi bi-gear-fill"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item edit" href="#" data-id="<?= $donation['id']; ?>"  data-url-update="<?= './../config/function/user_update.php' ?>" data-url="<?= './../config/function/user_edit.php' ?>">
+                                                                            <em class="bi bi-pencil-fill open-card-option"></em>
+                                                                                Edit
+                                                                        </a>
+                                                                        <a class="dropdown-item delete" data-url-destroy="<?= './../config/function/user_delete.php' ?>" data-id="<?= $donation['id']; ?>">
+                                                                            <em class="bi bi-trash-fill close-card"></em>
+                                                                            Delete
+                                                                        </a>
+                                                                        <?php if(empty($donation['deleted_at'])): ?>
+                                                                        <a class="dropdown-item verify" data-url-verify="<?= './../config/function/user_verify.php' ?>" data-id="<?= $donation['id']; ?>" data-status="1">
+                                                                            <em class="bi bi-x-circle-fill close-card"></em>
+                                                                            Not Active
+                                                                        </a>
+                                                                        <?php endif ?>
+                                                                    </div>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                            }
+                                                        }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <!-- Table with stripped rows -->
+                                <!-- End Table with stripped rows -->
                             </div>
+
 
                             <!-- Change Password Content -->
                             <div class="tab-pane fade" id="pills-password" role="tabpanel" aria-labelledby="pills-password-tab" tabindex="0">
@@ -120,7 +197,8 @@
             </div>
         </div>
     </div>
-
+    
+    <?php (empty(@$isVerify) && !empty(@$user)) ? include 'modal/donation.php' : ''; ?>
     <?php include 'layouts_frontend/footer.php'; ?>
     <?php include 'layouts_frontend/script.php'; ?>
     <script src="assets/vendor/jquery-validation/jquery.validate.min.js"></script>
@@ -144,6 +222,8 @@
 				});
 				<?php unset($_SESSION['message_error']); ?>
 			<?php endif; ?>
+
+            
 		});
 	</script>
 </body>

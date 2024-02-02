@@ -143,6 +143,38 @@
 		return $row['count'] > 0;
 	}
 
+	function getAllDonation() {
+		global $conn;
+		$sql = "SELECT users.name, donations.* FROM donations
+                JOIN users ON donations.user_id = users.id WHERE donations.deleted_at IS NULL ORDER BY donations.created_at DESC ";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$donations = [];
+        while ($row = $result->fetch_assoc()) {
+            $donations[] = $row;
+        }
+        $stmt->close();
+        return $donations;
+	}
+
+	function getByUserDonationWithDeleted($user_id) {
+		global $conn;
+		$sql = "SELECT users.name, donations.* FROM donations
+                JOIN users ON donations.user_id = users.id WHERE users.id = $user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$donations = [];
+        while ($row = $result->fetch_assoc()) {
+            $donations[] = $row;
+        }
+        $stmt->close();
+        return $donations;
+	}
+
     function uniqueEmail($email) {
 		global $conn;
 		$sql = "SELECT users.id FROM users WHERE users.email = ?";

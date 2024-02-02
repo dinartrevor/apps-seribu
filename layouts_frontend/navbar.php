@@ -28,7 +28,11 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Buat Donasi</a></li>
+                            <?php if (empty($isVerify) && !empty(@$user)) { ?>
+                            <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#donationModal">Buat Donasi</a></li>
+                            <?php }else{ ?>
+                                <li><a href="login.php" class="dropdown-item">Buat Donasi</a></li>
+                            <?php } ?>
                             <li><a class="dropdown-item" href="config/function/logout.php">Logout</a></li>
                         </ul>
                     </li>

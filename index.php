@@ -5,6 +5,8 @@
         $user =  getUserProfile($_SESSION['user']['npm']);
         $isVerify = $user['status'] == 2 ? 2 : '';
     }
+    $payment_methods = getAllPaymentMethod();
+    $donations = getAllDonation();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,55 +72,35 @@
 		</div>
         <div class="row">
             <!-- Card Donasi Populer 1 -->
+            <?php if(!empty($donations)){
+                $limitedDonations = array_slice($donations, 0, 3);
+                foreach($limitedDonations as $donation){    
+                    $timestamp = strtotime($donation['created_at']);
+                    $formattedDate = strftime('%A, %d %B %Y', $timestamp);
+            ?>
             <div class="col-md-4">
                 <div class="card shadow p-3 mb-5 bg-body rounded">
-                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Donasi 1">
+                    <img src="<?= $donation['image'] ?  'uploads/'.$donation['image'] : 'https://via.placeholder.com/300' ?>" class="card-img-top" alt="Donasi 1">
                     <div class="card-body">
-                        <h5 class="card-title">Donasi untuk Pendidikan</h5>
-                        <p class="card-text">Bantu kami menyediakan buku dan alat tulis untuk anak-anak kurang mampu.</p>
+                        <h5 class="card-title"><?= $donation['title'] ?></h5>
+                        <p class="card-text"><?= $donation['notes'] ?></p>
                         <div class="progress mb-2">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
-                                aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">Rp 70,000 / Rp 100,000</div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= (400000/intval($donation['amount'])) * 100 ?>%;"
+                                aria-valuenow="<?= (400000/intval($donation['amount'])) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
+                                Rp 70,000 / Rp <?= number_format($donation['amount']) ?>
+                            </div>
                         </div>
-						<p class="card-text"><strong>Donor:</strong> Dinar Abdul Hollik - January 21, 2024</p>
-                        <a href="#" class="btn btn-primary">Donasi Sekarang</a>
-                    </div>
-                </div>
-            </div>
+						<p class="card-text"><strong>Donor : </strong><?= $donation['name'] ?>  - <?= $formattedDate ?></p>
+                        <p class="card-text"><strong>Target : Rp <?= number_format($donation['amount']) ?></strong> </p>
 
-            <!-- Card Donasi Populer 2 -->
-            <div class="col-md-4">
-                <div class="card shadow p-3 mb-5 bg-body rounded">
-                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Donasi 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Donasi untuk Kesehatan</h5>
-                        <p class="card-text">Bantu kami memberikan akses kesehatan yang lebih baik untuk masyarakat.</p>
-                        <div class="progress mb-2">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
-                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">Rp 70,000 / Rp 100,000</div>
-                        </div>
-						<p class="card-text"><strong>Donor:</strong> Rizky Oktaviandy - January 21, 2024</p>
                         <a href="#" class="btn btn-primary">Donasi Sekarang</a>
                     </div>
                 </div>
             </div>
-
-            <!-- Card Donasi Populer 3 -->
-            <div class="col-md-4">
-                <div class="card shadow p-3 mb-5 bg-body rounded">
-                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Donasi 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Donasi untuk Lingkungan</h5>
-                        <p class="card-text">Dukung upaya kami dalam menjaga keberlanjutan lingkungan hidup.</p>
-                        <div class="progress mb-2">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
-                                aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">Rp 70,000 / Rp 100,000</div>
-                        </div>
-						<p class="card-text"><strong>Donor:</strong> Yogi Saputra - January 21, 2024</p>
-                        <a href="#" class="btn btn-primary">Donasi Sekarang</a>
-                    </div>
-                </div>
-            </div>
+            <?php }
+        
+                } 
+            ?>
         </div>
     </div>
     <!-- Banner -->
@@ -131,13 +113,19 @@
                     <div class="card-img-overlay d-flex align-items-center justify-content-center">
                         <div class="text-center">
                             <h1 class="card-title">Satu Rupiah Satu Harapan <br>#SeribuSenyuman</h1>
-                            <a href="#" class="btn btn-primary btn-lg mt-3">Donasi Sekarang</a>
+                            <?php if (empty($isVerify) && !empty(@$user)) { ?>
+                                <a href="#" class="btn btn-primary btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#donationModal">Donasi Sekarang</a>
+                            <?php }else{ ?>
+                                <a href="login.php" class="btn btn-primary btn-lg mt-3">Donasi Sekarang</a>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <?php (empty(@$isVerify) && !empty(@$user)) ? include 'modal/donation.php' : ''; ?>
     <?php include 'layouts_frontend/footer.php'; ?>
 	<?php include 'layouts_frontend/script.php'; ?>
 </body>
