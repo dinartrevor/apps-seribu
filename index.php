@@ -6,6 +6,7 @@
         $isVerify = $user['status'] == 2 ? 2 : '';
     }
     $payment_methods = getAllPaymentMethod();
+    $paymentUser = getAllPaymentMethodByUser();
     $donations = getAllDonation();
 ?>
 <!DOCTYPE html>
@@ -74,7 +75,7 @@
             <!-- Card Donasi Populer 1 -->
             <?php if(!empty($donations)){
                 $limitedDonations = array_slice($donations, 0, 3);
-                foreach($limitedDonations as $donation){    
+                foreach($limitedDonations as $donation){
                     $timestamp = strtotime($donation['created_at']);
                     $formattedDate = strftime('%A, %d %B %Y', $timestamp);
             ?>
@@ -85,21 +86,21 @@
                         <h5 class="card-title"><?= $donation['title'] ?></h5>
                         <p class="card-text"><?= $donation['notes'] ?></p>
                         <div class="progress mb-2">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= (400000/intval($donation['amount'])) * 100 ?>%;"
-                                aria-valuenow="<?= (400000/intval($donation['amount'])) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= ($donation['donor_amount']/intval($donation['amount'])) * 100 ?>%;"
+                                aria-valuenow="<?= ($donation['donor_amount']/intval($donation['amount'])) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
                                 Rp 70,000 / Rp <?= number_format($donation['amount']) ?>
                             </div>
                         </div>
-						<p class="card-text"><strong>Donor : </strong><?= $donation['name'] ?>  - <?= $formattedDate ?></p>
+						<p class="card-text"><strong>Pembuat : </strong><?= $donation['name'] ?>  - <?= $formattedDate ?></p>
                         <p class="card-text"><strong>Target : Rp <?= number_format($donation['amount']) ?></strong> </p>
 
-                        <a href="#" class="btn btn-primary">Donasi Sekarang</a>
+                        <a href="#" class="btn btn-primary" onclick="clickDonor('<?= $donation['id']  ?>')">Donasi Sekarang</a>
                     </div>
                 </div>
             </div>
             <?php }
-        
-                } 
+
+                }
             ?>
         </div>
     </div>
@@ -124,10 +125,16 @@
             </div>
         </div>
     </div>
-    
     <?php (empty(@$isVerify) && !empty(@$user)) ? include 'modal/donation.php' : ''; ?>
+    <?php include 'modal/donor.php'; ?>
     <?php include 'layouts_frontend/footer.php'; ?>
 	<?php include 'layouts_frontend/script.php'; ?>
+    <script>
+        function clickDonor(id){
+            $("#donation_id").val(id);
+            $("#donorModal").modal('show');
+        }
+    </script>
 </body>
 
 </html>

@@ -95,6 +95,21 @@
         $stmt->close();
         return $users;
 	}
+    function getAllPaymentMethodByUser() {
+		global $conn;
+		$sql = "SELECT name, type, id, created_at FROM payment_methods
+                WHERE deleted_by IS NULL";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$users = [];
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+        $stmt->close();
+        return $users;
+	}
     function getUserRole($email){
         global $conn;
 		$sql = "SELECT roles.name FROM users
@@ -145,8 +160,10 @@
 
 	function getAllDonation() {
 		global $conn;
-		$sql = "SELECT users.name, donations.* FROM donations
-                JOIN users ON donations.user_id = users.id WHERE donations.deleted_at IS NULL ORDER BY donations.created_at DESC ";
+		$sql = "SELECT users.name, donations.*, donors.amount as donor_amount FROM donations
+                JOIN users ON donations.user_id = users.id
+                LEFT JOIN donors ON donations.id = donors.donation_id
+                WHERE donations.deleted_at IS NULL ORDER BY donations.created_at DESC ";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
 
