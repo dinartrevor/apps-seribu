@@ -6,11 +6,19 @@ $(document).ready(function () {
                 name: {
                     required: true,
                 },
+                permission: {
+                    required: true,
+                },
             },
             messages: {
                 name: {
                     required: function () {
                         toastr.error($('#name').attr('placeholder') + ' Harus Diisi')
+                    },
+                },
+                permission: {
+                    required: function () {
+                        toastr.error($('#permission').attr('placeholder') + ' Harus Diisi')
                     },
                 },
             },

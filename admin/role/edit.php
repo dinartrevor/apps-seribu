@@ -18,7 +18,7 @@
                             <table class="table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th><input type="checkbox" class="form-check-input ModalallCheckbox" id="permission" name="permission_multiple[]"></th>
+                                        <th><input type="checkbox" class="form-check-input ModalallCheckbox" id="permission_edit" name="permission_multiple[]"></th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>

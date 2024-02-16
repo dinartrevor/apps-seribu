@@ -17,7 +17,7 @@
                             <table class="table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th><input type="checkbox" class="form-check-input ModalallCheckbox" id="permission" name="permission_multiple[]"></th>
+                                        <th><input type="checkbox" class="form-check-input ModalallCheckbox" name="permission_multiple[]"></th>
                                         <th>Name</th>
                                     </tr>
                                 </thead>
@@ -27,7 +27,7 @@
                                     ?>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" class="form-check-input" id="<?= $value['id'] ?>" name="permission[]" value="<?= $value['id'] ?>">
+                                            <input type="checkbox" class="form-check-input" id="permission" name="permission[]" value="<?= $value['id'] ?>">
                                         </td>
                                         <td>
                                             <label for="permission" class="form-check-label"><?= $value['name'] ?></label>
