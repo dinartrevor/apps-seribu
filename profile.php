@@ -6,6 +6,7 @@
         $isVerify = $user['status'] == 2 ? 2 : '';
         $isDisabled = $user['status'] == 2 ? 'disabled' : '';
         $donations = getByUserDonationWithDeleted($user['id']);
+        $donors = getByUserDonorWithDeleted($user['id']);
     }else{
 
 		header('Location: index.php');
@@ -59,6 +60,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-donasi-tab" data-bs-toggle="pill" data-bs-target="#pills-donasi" role="tab" aria-controls="pills-donasi" aria-selected="false" <?= @$isDisabled ?>>Donasi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-donor-tab" data-bs-toggle="pill" data-bs-target="#pills-donor" role="tab" aria-controls="pills-donor" aria-selected="false" <?= @$isDisabled ?>>Donor</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password" role="tab" aria-controls="pills-password" aria-selected="false">Ganti Password</a>
@@ -130,28 +134,75 @@
                                                                 <?php }?>
                                                             </td>
                                                             <td>
+                                                            <?php if(empty($donation['deleted_at'])): ?>
+
                                                                 <div class="dropdown">
                                                                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="bi bi-gear-fill"></i>
                                                                     </button>
                                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item edit" href="#" data-id="<?= $donation['id']; ?>"  data-url-update="<?= './../config/function/user_update.php' ?>" data-url="<?= './../config/function/user_edit.php' ?>">
-                                                                            <em class="bi bi-pencil-fill open-card-option"></em>
-                                                                                Edit
-                                                                        </a>
-                                                                        <a class="dropdown-item delete" data-url-destroy="<?= './../config/function/user_delete.php' ?>" data-id="<?= $donation['id']; ?>">
-                                                                            <em class="bi bi-trash-fill close-card"></em>
-                                                                            Delete
-                                                                        </a>
-                                                                        <?php if(empty($donation['deleted_at'])): ?>
-                                                                        <a class="dropdown-item verify" data-url-verify="<?= './../config/function/user_verify.php' ?>" data-id="<?= $donation['id']; ?>" data-status="1">
+                                                                        <a class="dropdown-item verify" data-url-verify="<?= './../config/function/donation_verify.php' ?>" data-id="<?= $donation['id']; ?>">
                                                                             <em class="bi bi-x-circle-fill close-card"></em>
                                                                             Not Active
                                                                         </a>
-                                                                        <?php endif ?>
+
                                                                     </div>
                                                                 </div>
+                                                                <?php endif ?>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                            }
+                                                        }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <!-- Table with stripped rows -->
+                                <!-- End Table with stripped rows -->
+                            </div>
 
+                            <!-- Donor Content -->
+                            <div class="tab-pane fade" id="pills-donor" role="tabpanel" aria-labelledby="pills-donor-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h4>Data Donor</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped" id="data-table-donor">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Nama</th>
+                                                        <th scope="col">Donation</th>
+                                                        <th scope="col">Jumlah</th>
+                                                        <th scope="col">Metode Pembayaran</th>
+                                                        <th scope="col">Tanggal Donor</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                 <tbody>
+                                                 <?php if(!empty($donors)){
+                                                        foreach ($donors as $key => $donor) {
+                                                    ?>
+                                                        <tr>
+                                                            <td><?= $key + 1; ?></td>
+                                                            <td><?= $donor['name']; ?></td>
+                                                            <td><?= $donor['donation_name']; ?></td>
+                                                            <td><?= number_format($donor['amount']); ?></td>
+                                                            <td><?= $donor['payment_name']; ?></td>
+
+                                                            <td><?= date('d-m-Y', strtotime($donor['donation_date'])); ?></td>
+                                                            <td>
+                                                                <a class="dropdown-item show_image" href="#" data-image="<?= $donor['image']; ?>">
+                                                                    <em class="bi bi-camera open-card-option"></em>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     <?php
@@ -197,14 +248,14 @@
             </div>
         </div>
     </div>
-    
+
     <?php (empty(@$isVerify) && !empty(@$user)) ? include 'modal/donation.php' : ''; ?>
     <?php include 'layouts_frontend/footer.php'; ?>
     <?php include 'layouts_frontend/script.php'; ?>
     <script src="assets/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="assets/vendor/toastr/toastr.min.js"></script>
     <script src='assets/js/validationJs/profile.js'></script>
-    
+
 	<script>
 		$(document).ready(function () {
 			<?php if(!empty($_SESSION['message_success'])): ?>
@@ -222,8 +273,58 @@
 				});
 				<?php unset($_SESSION['message_error']); ?>
 			<?php endif; ?>
+            $('#data-table-donor').DataTable();
+            $('#data-table-donor tbody').on('click', '.show_image', function () {
+                let image = $(this).attr('data-image');
+                Swal.fire({
+                title: 'Bukti Pembayaran',
+                imageUrl: `uploads/${image}`,
+                imageWidth: 500, // specify image width
+                imageHeight: 500, // specify image height
+                imageAlt: 'Bukti Pembayaran',
+                confirmButtonText: 'Tutup'
+                });
 
-            
+            });
+
+            $('#data-table tbody').on('click', '.verify', function () {
+                var id = $(this).data('id');
+                var url = $(this).data('url-verify');
+                Swal.fire({
+                    title: "Are you sure to non Active it?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                }).then((result) => {
+                    if (result.isConfirmed){
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: {
+                                "id": id,
+                            },
+                            success: function (response) {
+                                response = JSON.parse(response);
+                                if(response.status){
+                                    Swal.fire("Done!", "It was succesfully Not Active!", "success").then(function(){
+                                        location.reload();
+                                    });
+                                }else{
+                                    Swal.fire("Error deleting!", "Please try again", "error").then(function(){
+                                        location.reload();
+                                    });
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                Swal.fire("Error deleting!", "Please try again", "error").then(function(){
+                                    location.reload();
+                                });
+                        }
+                        });
+                    }
+                });
+                });
 		});
 	</script>
 </body>

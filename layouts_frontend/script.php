@@ -19,6 +19,10 @@
             dropdownParent: $('#donationModal'),
 			width: '100%',
     	});
+        $('*select[data-selectModalDonorCreatejs="true"]').select2({
+            dropdownParent: $('#donorModal'),
+			width: '100%',
+    	});
         $('#data-table').DataTable();
         $(".number-only").keyup(function(e) {
             var regex = /^[0-9]+$/;
@@ -60,7 +64,7 @@
             let totalInput = parseInt($('#totalInput').val());
 
             if (totalInput > 1) {
-                $(`#payment_method_id${totalInput}`).select2('destroy'); 
+                $(`#payment_method_id${totalInput}`).select2('destroy');
                 $(`#payment_method_id${totalInput}`).remove();
                 $(`#account_number${totalInput}`).remove();
                 $(`#account_holder_name${totalInput}`).remove();

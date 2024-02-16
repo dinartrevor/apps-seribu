@@ -95,17 +95,21 @@
         $stmt->close();
         return $users;
 	}
-    function getAllPaymentMethodByUser() {
+    function getAllPaymentMethodByUser($user_id) {
 		global $conn;
-		$sql = "SELECT name, type, id, created_at FROM payment_methods
-                WHERE deleted_by IS NULL";
+		$sql = "SELECT donations.id as donation_id, payment_methods.name, payment_methods.type, payment_methods.id, donation_payment_methods.account_number, donation_payment_methods.account_holder_name
+                FROM payment_methods
+                JOIN  donation_payment_methods ON payment_methods.id = donation_payment_methods.payment_method_id
+                JOIN  donations ON donation_payment_methods.donation_id = donations.id
+                WHERE payment_methods.deleted_by IS NULL AND  donations.user_id = ?";
 		$stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
 		$stmt->execute();
 
 		$result = $stmt->get_result();
 		$users = [];
         while ($row = $result->fetch_assoc()) {
-            $users[] = $row;
+            $users[$row['donation_id']][] = $row;
         }
         $stmt->close();
         return $users;
@@ -160,10 +164,26 @@
 
 	function getAllDonation() {
 		global $conn;
-		$sql = "SELECT users.name, donations.*, donors.amount as donor_amount FROM donations
+		$sql = "SELECT users.name, donations.*, sum(donors.amount) as donor_amount FROM donations
                 JOIN users ON donations.user_id = users.id
                 LEFT JOIN donors ON donations.id = donors.donation_id
-                WHERE donations.deleted_at IS NULL ORDER BY donations.created_at DESC ";
+                WHERE donations.deleted_at IS NULL GROUP BY donations.id ORDER BY donations.created_at DESC ";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$donations = [];
+        while ($row = $result->fetch_assoc()) {
+            $donations[] = $row;
+        }
+        $stmt->close();
+        return $donations;
+	}
+	function getAllDonor() {
+		global $conn;
+		$sql = "SELECT donors.user_id, donors.donation_date, sum(donors.amount) as donor_amount, donors.name as donor_name
+                FROM donors
+                GROUP BY donors.user_id, donors.donation_date,donors.name";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
 
@@ -190,6 +210,24 @@
         }
         $stmt->close();
         return $donations;
+	}
+
+    function getByUserDonorWithDeleted($user_id) {
+		global $conn;
+		$sql = "SELECT donations.title as donation_name,payment_methods.name as payment_name, donors.* FROM donors
+                JOIN donations ON donors.donation_id = donations.id
+                JOIN payment_methods ON donors.payment_method_id = payment_methods.id
+                WHERE donors.user_id = $user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$donors = [];
+        while ($row = $result->fetch_assoc()) {
+            $donors[] = $row;
+        }
+        $stmt->close();
+        return $donors;
 	}
 
     function uniqueEmail($email) {

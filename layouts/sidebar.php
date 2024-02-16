@@ -70,7 +70,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin/role.php" class="<?php echo (strpos($current_page, 'role.php') !== false) ? 'active' : ''; ?>">
+                    <a href="../admin/role.php" class="<?php echo (strpos($current_page, 'role.php') !== false) ? 'active' : ''; ?>">http://192.168.1.228/#
                         <i class="bi bi-circle"></i><span>Role</span>
                     </a>
                 </li>
@@ -93,6 +93,25 @@
                 <li>
                     <a href="../admin/payment_method.php" class="<?php echo (strpos($current_page, 'payment_method.php') !== false) ? 'active' : ''; ?>">
                         <i class="bi bi-circle"></i><span>Metode Pembayaran</span>
+                    </a>
+                </li>
+                <!-- Add other user management links here -->
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php echo (strpos($current_page, 'donation.php') !== false || strpos($current_page, 'donatur.php') !== false) ? '' : 'collapsed'; ?>"
+               data-bs-target="#content-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-bookmarks-fill"></i><span>Content</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="content-nav" class="nav-content collapse <?php echo (strpos($current_page, 'donation.php') !== false || strpos($current_page, 'donatur.php') !== false) ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="../admin/donation.php" class="<?php echo (strpos($current_page, 'donation.php') !== false) ? 'active' : ''; ?>">
+                        <i class="bi bi-circle"></i><span>Donation</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin/donatur.php" class="<?php echo (strpos($current_page, 'donatur.php') !== false) ? 'active' : ''; ?>">
+                        <i class="bi bi-circle"></i><span>Donatur</span>
                     </a>
                 </li>
                 <!-- Add other user management links here -->

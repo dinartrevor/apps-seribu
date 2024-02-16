@@ -16,10 +16,10 @@
                     <a class="nav-link <?php echo (strpos($current_page, 'index.php') !== false) ? 'active' : ''; ?>" href="index.php">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Donasi</a>
+                    <a class="nav-link <?php echo (strpos($current_page, 'donasi.php') !== false) ? 'active' : ''; ?>" href="donasi.php">Donasi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tentang Kami</a>
+                    <a class="nav-link <?php echo (strpos($current_page, 'about.php') !== false) ? 'active' : ''; ?>" href="about.php">Tentang Kami</a>
                 </li>
                 <?php if(!empty($_SESSION['user'])){ ?>
                     <li class="nav-item dropdown">

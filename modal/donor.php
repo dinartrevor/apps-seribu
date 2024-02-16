@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <form action="config/function/donation_store.php" method="POST" enctype='multipart/form-data'>
+          <form action="config/function/donor_store.php" method="POST" enctype='multipart/form-data'>
             <input type="hidden" name="user_id" id="user_id" value='<?= @$user['id']  ?>'>
             <input type="hidden" name="donation_id" id="donation_id">
           	<div class="row">
@@ -20,16 +20,18 @@
 				<div class="col-md-6">
 					<div class="mb-3">
 						<label for="amount" class="form-label">Jumlah Donasi<span class="text-red">*</span></label>
-						<input type="text" class="form-control currency" id="amount" name="amount" value="1000">
+						<input type="text" class="form-control currency" id="amount" name="amount" value="<?= number_format(1000)?>">
 					</div>
 				</div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="payment_method" class="form-label">Metode Pembayaran <span class="text-red">*</span></label>
-                        <select name="payment_method_id" id="payment_method_id" class="form-select"  aria-labelledby="payment_method"  data-selectModalCreatejs="true" data-placeholder="Metode Pembayaran">
+                        <select name="payment_method_id" id="donor_payment_method_id" class="form-select"  aria-labelledby="payment_method"  data-selectModalDonorCreatejs="true" data-placeholder="Metode Pembayaran">
                             <option value="" selected disabled>Pilih Metode Pembayaran</option>
 
                         </select>
+                        <p class="h5 mt-2" id="donor_number"></p>
+                        <p class="h5" id="donor_name"></p>
                     </div>
                 </div>
 				<div class="col-md-6">
