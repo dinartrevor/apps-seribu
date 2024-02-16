@@ -1,6 +1,11 @@
 <?php
-  session_start();
+    session_start();
 
-  unset($_SESSION['user']);
-  header('Location: ../../login.php');
-  exit();
+    if($_SESSION['user']['role_id'] == 1){
+      unset($_SESSION['user']);
+      header('Location: ../../login.php');
+    }else{
+        unset($_SESSION['user']);
+        header('Location: ../../index.php');
+    }
+    exit();
